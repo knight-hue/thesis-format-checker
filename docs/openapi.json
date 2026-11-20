@@ -1,0 +1,4002 @@
+{
+  "components": {
+    "schemas": {
+      "Body_check_paper_file_api_check_file_post": {
+        "properties": {
+          "college_id": {
+            "description": "学院 ID，如 jlu_cs",
+            "title": "College Id",
+            "type": "string"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "会话 ID，传入时把检测结果写入会话上下文，供后续对话引用",
+            "title": "Conversation Id"
+          },
+          "file": {
+            "contentMediaType": "application/octet-stream",
+            "description": "待检测的 docx 论文文件",
+            "title": "File",
+            "type": "string"
+          },
+          "include_semantic": {
+            "default": true,
+            "description": "是否执行语义检查；AI 服务不可用时自动只跑零 LLM 的确定性条款（目录/致谢/参考文献/列表序号/单位/数字）",
+            "title": "Include Semantic",
+            "type": "boolean"
+          },
+          "recheck": {
+            "default": false,
+            "description": "重检模式：同一篇论文修复后再次检测，保留会话对话历史，只替换问题列表",
+            "title": "Recheck",
+            "type": "boolean"
+          },
+          "terminology_b04_domain_exempt": {
+            "default": false,
+            "description": "B04 医学词条按论文实际研究领域豁免；默认关闭",
+            "title": "Terminology B04 Domain Exempt",
+            "type": "boolean"
+          },
+          "terminology_strict": {
+            "default": false,
+            "description": "术语严格模式：AI 等 B 级条件豁免词仍要求首次解释",
+            "title": "Terminology Strict",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "file",
+          "college_id"
+        ],
+        "title": "Body_check_paper_file_api_check_file_post",
+        "type": "object"
+      },
+      "Body_create_check_job_api_check_jobs_create_post": {
+        "properties": {
+          "college_id": {
+            "description": "学院 ID，如 jlu_cs",
+            "title": "College Id",
+            "type": "string"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "会话 ID",
+            "title": "Conversation Id"
+          },
+          "file": {
+            "contentMediaType": "application/octet-stream",
+            "description": "待检测的 docx 论文文件",
+            "title": "File",
+            "type": "string"
+          },
+          "include_semantic": {
+            "default": true,
+            "description": "是否执行语义检查",
+            "title": "Include Semantic",
+            "type": "boolean"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "客户端预生成的 UUID，用于创建响应丢失后的任务恢复",
+            "title": "Job Id"
+          },
+          "recheck": {
+            "default": false,
+            "description": "是否为修复后的重检",
+            "title": "Recheck",
+            "type": "boolean"
+          },
+          "terminology_b04_domain_exempt": {
+            "default": false,
+            "description": "B04 医学词条按论文实际研究领域豁免；默认关闭",
+            "title": "Terminology B04 Domain Exempt",
+            "type": "boolean"
+          },
+          "terminology_strict": {
+            "default": false,
+            "description": "术语严格模式：AI 等 B 级条件豁免词仍要求首次解释",
+            "title": "Terminology Strict",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "file",
+          "college_id"
+        ],
+        "title": "Body_create_check_job_api_check_jobs_create_post",
+        "type": "object"
+      },
+      "Body_fix_paper_api_fix_post": {
+        "properties": {
+          "college_id": {
+            "description": "学院 ID，如 jlu_cs",
+            "title": "College Id",
+            "type": "string"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "会话 ID，传入时把已修复项从会话检测结果中同步移除",
+            "title": "Conversation Id"
+          },
+          "file": {
+            "contentMediaType": "application/octet-stream",
+            "description": "原始 docx 论文文件",
+            "title": "File",
+            "type": "string"
+          },
+          "images": {
+            "default": [],
+            "description": "图片类修复项的新图片文件，按 issue 出现顺序对应",
+            "items": {
+              "contentMediaType": "application/octet-stream",
+              "type": "string"
+            },
+            "title": "Images",
+            "type": "array"
+          },
+          "issues_json": {
+            "description": "用户确认修复的 issue 列表（JSON 字符串）",
+            "title": "Issues Json",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file",
+          "college_id",
+          "issues_json"
+        ],
+        "title": "Body_fix_paper_api_fix_post",
+        "type": "object"
+      },
+      "Body_rebuild_paper_api_rebuild_post": {
+        "properties": {
+          "college_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "学院 ID，如 jlu_cs；传入时按该院的结构识别表解析",
+            "title": "College Id"
+          },
+          "file": {
+            "contentMediaType": "application/octet-stream",
+            "description": "原始 docx 论文文件",
+            "title": "File",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file"
+        ],
+        "title": "Body_rebuild_paper_api_rebuild_post",
+        "type": "object"
+      },
+      "BuildKBRequest": {
+        "properties": {
+          "college_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Id"
+          }
+        },
+        "title": "BuildKBRequest",
+        "type": "object"
+      },
+      "BuildKBResponse": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "status": {
+            "const": "success",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ],
+        "title": "BuildKBResponse",
+        "type": "object"
+      },
+      "ChatActionItem": {
+        "description": "对话动作：前端据此跳转/高亮，不让模型复述清单。",
+        "properties": {
+          "hint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hint"
+          },
+          "rule_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Rule Ids",
+            "type": "array"
+          },
+          "targets": {
+            "items": {
+              "$ref": "#/components/schemas/ChatIssueTarget"
+            },
+            "title": "Targets",
+            "type": "array"
+          },
+          "type": {
+            "enum": [
+              "open-result",
+              "highlight-issues"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "title": "ChatActionItem",
+        "type": "object"
+      },
+      "ChatBlock": {
+        "description": "结构化回答块；前端优先渲染 blocks，缺省时回退到 conclusion。",
+        "properties": {
+          "issues": {
+            "items": {
+              "$ref": "#/components/schemas/ChatIssueCard"
+            },
+            "title": "Issues",
+            "type": "array"
+          },
+          "text": {
+            "default": "",
+            "title": "Text",
+            "type": "string"
+          },
+          "title": {
+            "default": "",
+            "title": "Title",
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "summary",
+              "issues",
+              "text"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "title": "ChatBlock",
+        "type": "object"
+      },
+      "ChatFeedbackRequest": {
+        "description": "回答反馈：只收评分与元数据，不收问题/回答正文。",
+        "properties": {
+          "answer_source": {
+            "default": "",
+            "title": "Answer Source",
+            "type": "string"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "intent": {
+            "default": "",
+            "title": "Intent",
+            "type": "string"
+          },
+          "rating": {
+            "enum": [
+              "helpful",
+              "not_helpful",
+              "off_topic"
+            ],
+            "title": "Rating",
+            "type": "string"
+          },
+          "response_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Response Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "response_id",
+          "rating"
+        ],
+        "title": "ChatFeedbackRequest",
+        "type": "object"
+      },
+      "ChatFeedbackResponse": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "response_id": {
+            "title": "Response Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "success",
+              "skipped"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "response_id"
+        ],
+        "title": "ChatFeedbackResponse",
+        "type": "object"
+      },
+      "ChatIssueCard": {
+        "description": "对话中的单条问题卡片：字段直接来自检测结果。",
+        "properties": {
+          "actual": {
+            "title": "Actual"
+          },
+          "basis": {
+            "default": "",
+            "title": "Basis",
+            "type": "string"
+          },
+          "category": {
+            "default": "",
+            "title": "Category",
+            "type": "string"
+          },
+          "expected": {
+            "default": "",
+            "title": "Expected",
+            "type": "string"
+          },
+          "index": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index"
+          },
+          "location": {
+            "default": "",
+            "title": "Location",
+            "type": "string"
+          },
+          "message": {
+            "default": "",
+            "title": "Message",
+            "type": "string"
+          },
+          "rule_id": {
+            "default": "",
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "severity": {
+            "default": "",
+            "title": "Severity",
+            "type": "string"
+          },
+          "suggestion": {
+            "default": "",
+            "title": "Suggestion",
+            "type": "string"
+          }
+        },
+        "title": "ChatIssueCard",
+        "type": "object"
+      },
+      "ChatIssueTarget": {
+        "description": "精确高亮目标：规则号 + 定位。前端按两者一起匹配，只亮那一条。",
+        "properties": {
+          "location": {
+            "default": "",
+            "title": "Location",
+            "type": "string"
+          },
+          "rule_id": {
+            "default": "",
+            "title": "Rule Id",
+            "type": "string"
+          }
+        },
+        "title": "ChatIssueTarget",
+        "type": "object"
+      },
+      "ChatSuggestion": {
+        "description": "可点击的后续问题；只提供当前已支持的问法。",
+        "properties": {
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string"
+          }
+        },
+        "required": [
+          "label",
+          "query"
+        ],
+        "title": "ChatSuggestion",
+        "type": "object"
+      },
+      "CheckBreakdownResponse": {
+        "properties": {
+          "rule_engine": {
+            "$ref": "#/components/schemas/RuleBreakdownResponse"
+          },
+          "semantic": {
+            "$ref": "#/components/schemas/SemanticBreakdownResponse"
+          }
+        },
+        "required": [
+          "rule_engine",
+          "semantic"
+        ],
+        "title": "CheckBreakdownResponse",
+        "type": "object"
+      },
+      "CheckJobAcceptedResponse": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "progress": {
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Progress",
+            "type": "integer"
+          },
+          "stage": {
+            "const": "queued",
+            "title": "Stage",
+            "type": "string"
+          },
+          "status": {
+            "const": "queued",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id",
+          "status",
+          "progress",
+          "stage",
+          "message",
+          "created_at",
+          "expires_at"
+        ],
+        "title": "CheckJobAcceptedResponse",
+        "type": "object"
+      },
+      "CheckJobLookupRequest": {
+        "properties": {
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "title": "CheckJobLookupRequest",
+        "type": "object"
+      },
+      "CheckJobResultResponse": {
+        "properties": {
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "result": {
+            "$ref": "#/components/schemas/CheckResponse"
+          },
+          "status": {
+            "const": "succeeded",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id",
+          "status",
+          "result"
+        ],
+        "title": "CheckJobResultResponse",
+        "type": "object"
+      },
+      "CheckJobStatusResponse": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "progress": {
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Progress",
+            "type": "integer"
+          },
+          "result_available": {
+            "title": "Result Available",
+            "type": "boolean"
+          },
+          "stage": {
+            "enum": [
+              "queued",
+              "validating",
+              "parsing",
+              "checking",
+              "saving",
+              "completed",
+              "failed"
+            ],
+            "title": "Stage",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "running",
+              "succeeded",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id",
+          "status",
+          "progress",
+          "stage",
+          "message",
+          "result_available",
+          "created_at",
+          "updated_at",
+          "expires_at"
+        ],
+        "title": "CheckJobStatusResponse",
+        "type": "object"
+      },
+      "CheckRequest": {
+        "description": "论文格式检测请求：document 为解析契约，include_semantic 控制是否跑语义检查。",
+        "properties": {
+          "college_id": {
+            "title": "College Id",
+            "type": "string"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "document": {
+            "$ref": "#/components/schemas/DocumentContract"
+          },
+          "include_semantic": {
+            "default": true,
+            "title": "Include Semantic",
+            "type": "boolean"
+          },
+          "recheck": {
+            "default": false,
+            "title": "Recheck",
+            "type": "boolean"
+          },
+          "terminology_b04_domain_exempt": {
+            "default": false,
+            "description": "B04 医学词条按论文实际研究领域豁免；运行时判定接入后生效，当前版本仅落契约。",
+            "title": "Terminology B04 Domain Exempt",
+            "type": "boolean"
+          },
+          "terminology_strict": {
+            "default": false,
+            "description": "严格模式：AI 等 B 级条件豁免词仍要求首次解释；运行时判定接入后生效，当前版本仅落契约。",
+            "title": "Terminology Strict",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "college_id",
+          "document"
+        ],
+        "title": "CheckRequest",
+        "type": "object"
+      },
+      "CheckResponse": {
+        "properties": {
+          "advisory_issues": {
+            "items": {
+              "$ref": "#/components/schemas/IssueResponse"
+            },
+            "maxItems": 1000,
+            "title": "Advisory Issues",
+            "type": "array"
+          },
+          "breakdown": {
+            "$ref": "#/components/schemas/CheckBreakdownResponse"
+          },
+          "college_id": {
+            "title": "College Id",
+            "type": "string"
+          },
+          "grouped_issues": {
+            "minimum": 0.0,
+            "title": "Grouped Issues",
+            "type": "integer"
+          },
+          "issue_summary": {
+            "items": {
+              "$ref": "#/components/schemas/IssueCategorySummaryResponse"
+            },
+            "title": "Issue Summary",
+            "type": "array"
+          },
+          "issues": {
+            "items": {
+              "$ref": "#/components/schemas/IssueResponse"
+            },
+            "maxItems": 1000,
+            "title": "Issues",
+            "type": "array"
+          },
+          "issues_truncated": {
+            "title": "Issues Truncated",
+            "type": "boolean"
+          },
+          "passed": {
+            "title": "Passed",
+            "type": "boolean"
+          },
+          "pending_review": {
+            "items": {
+              "$ref": "#/components/schemas/IssueResponse"
+            },
+            "maxItems": 1000,
+            "title": "Pending Review",
+            "type": "array"
+          },
+          "returned_issues": {
+            "maximum": 1000.0,
+            "minimum": 0.0,
+            "title": "Returned Issues",
+            "type": "integer"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "total_issues": {
+            "minimum": 0.0,
+            "title": "Total Issues",
+            "type": "integer"
+          },
+          "unchecked": {
+            "items": {
+              "$ref": "#/components/schemas/UncheckedItemResponse"
+            },
+            "title": "Unchecked",
+            "type": "array"
+          }
+        },
+        "required": [
+          "schema_version",
+          "college_id",
+          "passed",
+          "total_issues",
+          "grouped_issues",
+          "returned_issues",
+          "issues_truncated",
+          "issue_summary",
+          "issues",
+          "breakdown"
+        ],
+        "title": "CheckResponse",
+        "type": "object"
+      },
+      "ClarifyPayload": {
+        "description": "澄清追问：问题 + 可点选的选项。",
+        "properties": {
+          "kind": {
+            "enum": [
+              "paper_index",
+              "heading_level",
+              "multi_question"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "options": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Options",
+            "type": "array"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "question"
+        ],
+        "title": "ClarifyPayload",
+        "type": "object"
+      },
+      "CollegeInfo": {
+        "description": "学院坐标：id 是主键，学校/学院/专业/模板版本是坐标字段（见 config/colleges.json）。",
+        "properties": {
+          "college": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College"
+          },
+          "college_id": {
+            "title": "College Id",
+            "type": "string"
+          },
+          "college_name": {
+            "title": "College Name",
+            "type": "string"
+          },
+          "display_name": {
+            "default": "",
+            "title": "Display Name",
+            "type": "string"
+          },
+          "effective_year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective Year"
+          },
+          "major": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Major"
+          },
+          "major_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Major Name"
+          },
+          "school": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "School"
+          },
+          "school_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "School Name"
+          },
+          "template_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Version"
+          }
+        },
+        "required": [
+          "college_id",
+          "college_name"
+        ],
+        "title": "CollegeInfo",
+        "type": "object"
+      },
+      "DocumentContract": {
+        "additionalProperties": true,
+        "properties": {
+          "blocks": {
+            "items": {
+              "discriminator": {
+                "mapping": {
+                  "image": "#/components/schemas/ImageBlock",
+                  "paragraph": "#/components/schemas/ParagraphBlock",
+                  "table": "#/components/schemas/TableBlock"
+                },
+                "propertyName": "type"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/ParagraphBlock"
+                },
+                {
+                  "$ref": "#/components/schemas/TableBlock"
+                },
+                {
+                  "$ref": "#/components/schemas/ImageBlock"
+                }
+              ]
+            },
+            "title": "Blocks",
+            "type": "array"
+          },
+          "file_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Name"
+          },
+          "schema_version": {
+            "const": "1.0",
+            "default": "1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/Section"
+            },
+            "title": "Sections",
+            "type": "array"
+          }
+        },
+        "required": [
+          "sections",
+          "blocks"
+        ],
+        "title": "DocumentContract",
+        "type": "object"
+      },
+      "EarlierOccurrenceResponse": {
+        "description": "同一检查范围内更早出现的位置，供术语规则说明“非首次出现”。",
+        "properties": {
+          "excerpt": {
+            "title": "Excerpt",
+            "type": "string"
+          },
+          "index": {
+            "title": "Index",
+            "type": "integer"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "index",
+          "kind",
+          "excerpt"
+        ],
+        "title": "EarlierOccurrenceResponse",
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "description": "FastAPI/HTTPException 当前使用的统一 HTTP 错误体。",
+        "properties": {
+          "detail": {
+            "title": "Detail"
+          }
+        },
+        "required": [
+          "detail"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "FieldMark": {
+        "additionalProperties": true,
+        "description": "域代码信息（parser.fields.field_run_map）。\n\n注意：类名不能叫 ``Field``，否则会遮蔽 ``pydantic.Field``，\n让后续所有 ``Field(...)`` 默认值/约束静默失效（P0 契约回归）。",
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code"
+          },
+          "type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type"
+          }
+        },
+        "title": "FieldMark",
+        "type": "object"
+      },
+      "FixIssueBlockRef": {
+        "additionalProperties": true,
+        "description": "语义 issue 指向的正文片段。",
+        "properties": {
+          "index": {
+            "minimum": 0.0,
+            "title": "Index",
+            "type": "integer"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "maxLength": 10000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "title": "FixIssueBlockRef",
+        "type": "object"
+      },
+      "FormulaAsset": {
+        "additionalProperties": true,
+        "description": "公式引用的部件（OLE 预览图 / OLE 二进制），落盘后的索引信息。",
+        "properties": {
+          "content_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content Type"
+          },
+          "old_rid": {
+            "title": "Old Rid",
+            "type": "string"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string"
+          }
+        },
+        "required": [
+          "old_rid",
+          "path"
+        ],
+        "title": "FormulaAsset",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HeaderFooter": {
+        "additionalProperties": true,
+        "description": "页眉/页脚条目（parser.docx_to_json._collect_header_footers）。",
+        "properties": {
+          "image_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Image Count",
+            "type": "integer"
+          },
+          "is_linked_to_previous": {
+            "default": true,
+            "title": "Is Linked To Previous",
+            "type": "boolean"
+          },
+          "kind": {
+            "enum": [
+              "header",
+              "footer"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "paragraphs": {
+            "items": {
+              "$ref": "#/components/schemas/ParagraphBlock"
+            },
+            "title": "Paragraphs",
+            "type": "array"
+          },
+          "tables": {
+            "items": {
+              "$ref": "#/components/schemas/TableBlock"
+            },
+            "title": "Tables",
+            "type": "array"
+          },
+          "text": {
+            "default": "",
+            "title": "Text",
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "default",
+              "first_page",
+              "even_page"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "type"
+        ],
+        "title": "HeaderFooter",
+        "type": "object"
+      },
+      "HealthFeaturesResponse": {
+        "properties": {
+          "cache": {
+            "title": "Cache",
+            "type": "boolean"
+          },
+          "hybrid_search": {
+            "title": "Hybrid Search",
+            "type": "boolean"
+          },
+          "query_rewrite": {
+            "title": "Query Rewrite",
+            "type": "boolean"
+          },
+          "rerank": {
+            "title": "Rerank",
+            "type": "boolean"
+          },
+          "self_check": {
+            "title": "Self Check",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "hybrid_search",
+          "rerank",
+          "query_rewrite",
+          "self_check",
+          "cache"
+        ],
+        "title": "HealthFeaturesResponse",
+        "type": "object"
+      },
+      "HealthResponse": {
+        "properties": {
+          "features": {
+            "$ref": "#/components/schemas/HealthFeaturesResponse"
+          },
+          "llm_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Llm Error"
+          },
+          "llm_initialized": {
+            "title": "Llm Initialized",
+            "type": "boolean"
+          },
+          "llm_status": {
+            "enum": [
+              "initializing",
+              "ready",
+              "failed"
+            ],
+            "title": "Llm Status",
+            "type": "string"
+          },
+          "rag_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rag Error"
+          },
+          "rag_initialized": {
+            "title": "Rag Initialized",
+            "type": "boolean"
+          },
+          "rag_status": {
+            "enum": [
+              "initializing",
+              "ready",
+              "failed"
+            ],
+            "title": "Rag Status",
+            "type": "string"
+          },
+          "status": {
+            "const": "healthy",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "llm_initialized",
+          "llm_status",
+          "llm_error",
+          "rag_initialized",
+          "rag_status",
+          "rag_error",
+          "features"
+        ],
+        "title": "HealthResponse",
+        "type": "object"
+      },
+      "Hyperlink": {
+        "additionalProperties": true,
+        "properties": {
+          "run_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Run Count",
+            "type": "integer"
+          },
+          "run_index": {
+            "minimum": 0.0,
+            "title": "Run Index",
+            "type": "integer"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text",
+          "run_index"
+        ],
+        "title": "Hyperlink",
+        "type": "object"
+      },
+      "ImageBlock": {
+        "additionalProperties": true,
+        "properties": {
+          "align": {
+            "anyOf": [
+              {
+                "enum": [
+                  "left",
+                  "center",
+                  "right",
+                  "justify",
+                  "distribute"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Align"
+          },
+          "front_matter": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Front Matter"
+          },
+          "height_inch": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height Inch"
+          },
+          "index": {
+            "minimum": 0.0,
+            "title": "Index",
+            "type": "integer"
+          },
+          "inline": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inline"
+          },
+          "path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Path"
+          },
+          "type": {
+            "const": "image",
+            "title": "Type",
+            "type": "string"
+          },
+          "width_inch": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width Inch"
+          }
+        },
+        "required": [
+          "index",
+          "type"
+        ],
+        "title": "ImageBlock",
+        "type": "object"
+      },
+      "IssueCategorySummaryResponse": {
+        "properties": {
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "grouped_count": {
+            "minimum": 0.0,
+            "title": "Grouped Count",
+            "type": "integer"
+          },
+          "occurrence_count": {
+            "minimum": 0.0,
+            "title": "Occurrence Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "category",
+          "occurrence_count",
+          "grouped_count"
+        ],
+        "title": "IssueCategorySummaryResponse",
+        "type": "object"
+      },
+      "IssueEvidence": {
+        "description": "语义检查判定依据：范围、首次出现、更早出现与机器可读原因。",
+        "properties": {
+          "earlier_occurrences": {
+            "items": {
+              "$ref": "#/components/schemas/EarlierOccurrenceResponse"
+            },
+            "maxItems": 3,
+            "title": "Earlier Occurrences",
+            "type": "array"
+          },
+          "first_occurrence": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Occurrence"
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "enum": [
+                  "exempt_by_level",
+                  "not_first_in_scope",
+                  "first_occurrence_no_gloss",
+                  "context_unavailable",
+                  "model_guess_unlisted_term"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason Code"
+          },
+          "rule_hits": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Rule Hits",
+            "type": "array"
+          },
+          "scope": {
+            "anyOf": [
+              {
+                "enum": [
+                  "body",
+                  "zh_abstract",
+                  "en_abstract",
+                  "acknowledgement"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope"
+          }
+        },
+        "title": "IssueEvidence",
+        "type": "object"
+      },
+      "IssueLocationResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "col": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Col"
+          },
+          "index": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index"
+          },
+          "kinds": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Kinds"
+          },
+          "row": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Row"
+          },
+          "run": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run"
+          },
+          "text_preview": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text Preview"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "title": "IssueLocationResponse",
+        "type": "object"
+      },
+      "IssueResponse": {
+        "additionalProperties": true,
+        "description": "规则引擎与语义检测共享的问题结构；保留规则专属扩展字段。",
+        "properties": {
+          "actual": {
+            "title": "Actual"
+          },
+          "basis": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Basis"
+          },
+          "basis_detail": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Basis Detail"
+          },
+          "blocks": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/FixIssueBlockRef"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blocks"
+          },
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "conclusion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conclusion"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "decision": {
+            "default": "confirmed",
+            "enum": [
+              "confirmed",
+              "suggested",
+              "pending_review"
+            ],
+            "title": "Decision",
+            "type": "string"
+          },
+          "evidence": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IssueEvidence"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expected": {
+            "title": "Expected"
+          },
+          "fix_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fix Reason"
+          },
+          "fixable": {
+            "title": "Fixable",
+            "type": "boolean"
+          },
+          "location": {
+            "$ref": "#/components/schemas/IssueLocationResponse"
+          },
+          "location_samples": {
+            "items": {
+              "$ref": "#/components/schemas/IssueLocationResponse"
+            },
+            "maxItems": 10,
+            "title": "Location Samples",
+            "type": "array"
+          },
+          "locations": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/IssueLocationResponse"
+                },
+                "maxItems": 200,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Locations"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "occurrence_count": {
+            "minimum": 1.0,
+            "title": "Occurrence Count",
+            "type": "integer"
+          },
+          "rule_id": {
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ],
+            "title": "Severity",
+            "type": "string"
+          },
+          "source": {
+            "enum": [
+              "rule_engine",
+              "rag"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "suggestion": {
+            "default": "",
+            "title": "Suggestion",
+            "type": "string"
+          },
+          "variants": {
+            "items": {
+              "$ref": "#/components/schemas/IssueVariantResponse"
+            },
+            "maxItems": 10,
+            "title": "Variants",
+            "type": "array"
+          }
+        },
+        "required": [
+          "rule_id",
+          "category",
+          "severity",
+          "location",
+          "actual",
+          "expected",
+          "message",
+          "source",
+          "fixable",
+          "occurrence_count",
+          "location_samples"
+        ],
+        "title": "IssueResponse",
+        "type": "object"
+      },
+      "IssueVariantResponse": {
+        "additionalProperties": true,
+        "description": "同一规则名下的一处实测：实测值 / 要求值 / 结论 / 位置。",
+        "properties": {
+          "actual": {
+            "title": "Actual"
+          },
+          "conclusion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conclusion"
+          },
+          "expected": {
+            "title": "Expected"
+          },
+          "location": {
+            "$ref": "#/components/schemas/IssueLocationResponse"
+          }
+        },
+        "required": [
+          "location"
+        ],
+        "title": "IssueVariantResponse",
+        "type": "object"
+      },
+      "ParagraphBlock": {
+        "additionalProperties": true,
+        "properties": {
+          "alignment": {
+            "anyOf": [
+              {
+                "enum": [
+                  "left",
+                  "center",
+                  "right",
+                  "justify",
+                  "distribute"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alignment"
+          },
+          "auto_number": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Auto Number"
+          },
+          "auto_number_ref": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Auto Number Ref"
+          },
+          "auto_number_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Auto Number Text"
+          },
+          "center_tab": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Center Tab"
+          },
+          "fields": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fields"
+          },
+          "figure_text": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Figure Text"
+          },
+          "first_line_indent_pt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Line Indent Pt"
+          },
+          "formula_assets": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/FormulaAsset"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formula Assets"
+          },
+          "formula_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formula Number"
+          },
+          "formula_preview": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formula Preview"
+          },
+          "formula_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formula Text"
+          },
+          "formula_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "omml",
+                  "ole",
+                  "text"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formula Type"
+          },
+          "formula_xml": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formula Xml"
+          },
+          "hyperlinks": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Hyperlink"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hyperlinks"
+          },
+          "index": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index"
+          },
+          "kind": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Kind"
+          },
+          "left_indent_pt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Left Indent Pt"
+          },
+          "line_spacing_multiple": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Line Spacing Multiple"
+          },
+          "line_spacing_pt": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Line Spacing Pt"
+          },
+          "runs": {
+            "items": {
+              "$ref": "#/components/schemas/Run"
+            },
+            "title": "Runs",
+            "type": "array"
+          },
+          "section_break": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Break"
+          },
+          "space_after_pt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Space After Pt"
+          },
+          "space_before_pt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Space Before Pt"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "type": {
+            "const": "paragraph",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "text"
+        ],
+        "title": "ParagraphBlock",
+        "type": "object"
+      },
+      "RAGRequest": {
+        "properties": {
+          "college_id": {
+            "title": "College Id",
+            "type": "string"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          },
+          "spec_only": {
+            "default": false,
+            "title": "Spec Only",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "college_id",
+          "question"
+        ],
+        "title": "RAGRequest",
+        "type": "object"
+      },
+      "RAGResponse": {
+        "properties": {
+          "actions": {
+            "items": {
+              "$ref": "#/components/schemas/ChatActionItem"
+            },
+            "title": "Actions",
+            "type": "array"
+          },
+          "answer_schema_version": {
+            "default": "1.0",
+            "title": "Answer Schema Version",
+            "type": "string"
+          },
+          "answer_source": {
+            "default": "spec_kb",
+            "enum": [
+              "paper_facts",
+              "spec_kb",
+              "out_of_scope",
+              "clarify",
+              "agent",
+              "none"
+            ],
+            "title": "Answer Source",
+            "type": "string"
+          },
+          "basis": {
+            "title": "Basis",
+            "type": "string"
+          },
+          "blocks": {
+            "items": {
+              "$ref": "#/components/schemas/ChatBlock"
+            },
+            "title": "Blocks",
+            "type": "array"
+          },
+          "can_judge": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Can Judge"
+          },
+          "clarify": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ClarifyPayload"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "college": {
+            "title": "College",
+            "type": "string"
+          },
+          "conclusion": {
+            "title": "Conclusion",
+            "type": "string"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "found": {
+            "title": "Found",
+            "type": "boolean"
+          },
+          "from_cache": {
+            "default": false,
+            "title": "From Cache",
+            "type": "boolean"
+          },
+          "intent": {
+            "default": "spec_qa",
+            "title": "Intent",
+            "type": "string"
+          },
+          "observed": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Observed",
+            "type": "array"
+          },
+          "paper_version": {
+            "default": "",
+            "title": "Paper Version",
+            "type": "string"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          },
+          "response_id": {
+            "default": "",
+            "title": "Response Id",
+            "type": "string"
+          },
+          "slots": {
+            "additionalProperties": true,
+            "title": "Slots",
+            "type": "object"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceItem"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "suggestion": {
+            "title": "Suggestion",
+            "type": "string"
+          },
+          "suggestions": {
+            "items": {
+              "$ref": "#/components/schemas/ChatSuggestion"
+            },
+            "title": "Suggestions",
+            "type": "array"
+          },
+          "total_time": {
+            "title": "Total Time",
+            "type": "number"
+          },
+          "trace": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Trace",
+            "type": "array"
+          },
+          "unknown": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Unknown",
+            "type": "array"
+          }
+        },
+        "required": [
+          "college",
+          "question",
+          "conclusion",
+          "basis",
+          "suggestion",
+          "sources",
+          "found",
+          "total_time"
+        ],
+        "title": "RAGResponse",
+        "type": "object"
+      },
+      "RuleBreakdownResponse": {
+        "properties": {
+          "passed": {
+            "title": "Passed",
+            "type": "boolean"
+          },
+          "total_issues": {
+            "minimum": 0.0,
+            "title": "Total Issues",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "passed",
+          "total_issues"
+        ],
+        "title": "RuleBreakdownResponse",
+        "type": "object"
+      },
+      "Run": {
+        "additionalProperties": true,
+        "properties": {
+          "bold": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bold"
+          },
+          "char_spacing_pt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Char Spacing Pt"
+          },
+          "color_hex": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color Hex"
+          },
+          "east_asia_font": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "East Asia Font"
+          },
+          "field": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FieldMark"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "font_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Font Name"
+          },
+          "font_size_pt": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Font Size Pt"
+          },
+          "hyperlink": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hyperlink"
+          },
+          "italic": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Italic"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "Run",
+        "type": "object"
+      },
+      "Section": {
+        "additionalProperties": true,
+        "properties": {
+          "bottom_cm": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bottom Cm"
+          },
+          "footer_cm": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Footer Cm"
+          },
+          "footers": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/HeaderFooter"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Footers"
+          },
+          "header_cm": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Header Cm"
+          },
+          "headers": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/HeaderFooter"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Headers"
+          },
+          "height_cm": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height Cm"
+          },
+          "index": {
+            "minimum": 0.0,
+            "title": "Index",
+            "type": "integer"
+          },
+          "left_cm": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Left Cm"
+          },
+          "orientation": {
+            "anyOf": [
+              {
+                "enum": [
+                  "portrait",
+                  "landscape"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Orientation"
+          },
+          "paper_size": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Paper Size"
+          },
+          "right_cm": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Right Cm"
+          },
+          "top_cm": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top Cm"
+          },
+          "width_cm": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width Cm"
+          }
+        },
+        "required": [
+          "index"
+        ],
+        "title": "Section",
+        "type": "object"
+      },
+      "SemanticBreakdownResponse": {
+        "properties": {
+          "cache_hits": {
+            "minimum": 0.0,
+            "title": "Cache Hits",
+            "type": "integer"
+          },
+          "confirmed_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Confirmed Count",
+            "type": "integer"
+          },
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean"
+          },
+          "llm_calls": {
+            "minimum": 0.0,
+            "title": "Llm Calls",
+            "type": "integer"
+          },
+          "llm_enabled": {
+            "title": "Llm Enabled",
+            "type": "boolean"
+          },
+          "passed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Passed"
+          },
+          "pending_review_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Pending Review Count",
+            "type": "integer"
+          },
+          "prefilter_skips": {
+            "minimum": 0.0,
+            "title": "Prefilter Skips",
+            "type": "integer"
+          },
+          "reason": {
+            "default": "",
+            "title": "Reason",
+            "type": "string"
+          },
+          "total_issues": {
+            "minimum": 0.0,
+            "title": "Total Issues",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "enabled",
+          "llm_enabled",
+          "passed",
+          "total_issues",
+          "llm_calls",
+          "cache_hits",
+          "prefilter_skips"
+        ],
+        "title": "SemanticBreakdownResponse",
+        "type": "object"
+      },
+      "SessionResetRequest": {
+        "description": "清空会话对话历史（保留论文检测结果），用于前端“新对话”。",
+        "properties": {
+          "conversation_id": {
+            "title": "Conversation Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "conversation_id"
+        ],
+        "title": "SessionResetRequest",
+        "type": "object"
+      },
+      "SessionResetResponse": {
+        "properties": {
+          "conversation_id": {
+            "title": "Conversation Id",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "success",
+              "skipped"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "conversation_id"
+        ],
+        "title": "SessionResetResponse",
+        "type": "object"
+      },
+      "SourceItem": {
+        "properties": {
+          "chapter": {
+            "title": "Chapter",
+            "type": "string"
+          },
+          "content": {
+            "title": "Content",
+            "type": "string"
+          },
+          "full_path": {
+            "title": "Full Path",
+            "type": "string"
+          },
+          "preview": {
+            "title": "Preview",
+            "type": "string"
+          },
+          "rerank_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rerank Score"
+          },
+          "section": {
+            "title": "Section",
+            "type": "string"
+          }
+        },
+        "required": [
+          "chapter",
+          "section",
+          "full_path",
+          "content",
+          "preview"
+        ],
+        "title": "SourceItem",
+        "type": "object"
+      },
+      "TableBlock": {
+        "additionalProperties": true,
+        "properties": {
+          "align": {
+            "anyOf": [
+              {
+                "enum": [
+                  "left",
+                  "center",
+                  "right",
+                  "justify",
+                  "distribute"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Align"
+          },
+          "cells": {
+            "items": {
+              "$ref": "#/components/schemas/TableCell"
+            },
+            "minItems": 1,
+            "title": "Cells",
+            "type": "array"
+          },
+          "col_width_ratio": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Col Width Ratio"
+          },
+          "front_matter": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Front Matter"
+          },
+          "header_repeat": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Header Repeat"
+          },
+          "indent_pt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Indent Pt"
+          },
+          "index": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Index"
+          },
+          "n_cols": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "N Cols"
+          },
+          "n_rows": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "N Rows"
+          },
+          "row_heights_cm": {
+            "anyOf": [
+              {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Row Heights Cm"
+          },
+          "style": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Style"
+          },
+          "type": {
+            "const": "table",
+            "title": "Type",
+            "type": "string"
+          },
+          "width_pt": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width Pt"
+          }
+        },
+        "required": [
+          "type",
+          "cells"
+        ],
+        "title": "TableBlock",
+        "type": "object"
+      },
+      "TableCell": {
+        "additionalProperties": true,
+        "properties": {
+          "align": {
+            "anyOf": [
+              {
+                "enum": [
+                  "left",
+                  "center",
+                  "right",
+                  "justify",
+                  "distribute"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Align"
+          },
+          "col": {
+            "minimum": 0.0,
+            "title": "Col",
+            "type": "integer"
+          },
+          "east_asia_font": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "East Asia Font"
+          },
+          "font_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Font Name"
+          },
+          "font_size_pt": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Font Size Pt"
+          },
+          "grid_span": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Grid Span"
+          },
+          "row": {
+            "minimum": 0.0,
+            "title": "Row",
+            "type": "integer"
+          },
+          "runs": {
+            "items": {
+              "$ref": "#/components/schemas/Run"
+            },
+            "title": "Runs",
+            "type": "array"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "vmerge": {
+            "anyOf": [
+              {
+                "enum": [
+                  "restart",
+                  "continue"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vmerge"
+          }
+        },
+        "required": [
+          "row",
+          "col",
+          "text"
+        ],
+        "title": "TableCell",
+        "type": "object"
+      },
+      "UncheckedItemResponse": {
+        "description": "本次检测**没有执行**的条款，以及原因。\n\n模板里写着、但当前环境或能力做不到的检查（如图内文字：位图里的字是像素，\n字体名与字号都无法从图上可靠取得），不能静默消失——否则学生以为“全查过了”。\n这里逐条列出。",
+        "properties": {
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "rule_id": {
+            "title": "Rule Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id",
+          "reason"
+        ],
+        "title": "UncheckedItemResponse",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "基于检索增强生成的论文格式规范答疑服务，支持多学院、混合检索、重排序、查询改写",
+    "title": "论文格式规范 RAG 问答 API",
+    "version": "2.0.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/check": {
+      "post": {
+        "description": "对一篇论文解析结果执行完整检测。\n- **college_id**: 学院ID，如 jlu_cs\n- **document**: 论文解析契约 dict（blocks/sections）\n- **include_semantic**: 是否执行语义检查；为 false 时只跑确定性规则引擎。\n  为 true 时零 LLM 的确定性语义条款始终执行，定位类条款需要 AI 服务\n- **conversation_id**: 可选，传入时把检测结果写入会话上下文，供后续对话引用\n- **recheck**: 为 true 时视为同一篇论文修复后的重检，保留会话对话历史",
+        "operationId": "check_paper_api_check_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求或 DOCX 内容不合法"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求的资源不存在"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "服务内部处理失败"
+          }
+        },
+        "summary": "论文格式检测（规则引擎 + 语义检查）"
+      }
+    },
+    "/api/check-file": {
+      "post": {
+        "description": "解析上传的 DOCX，并将解析结果交给现有检测编排层。",
+        "operationId": "check_paper_file_api_check_file_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_check_paper_file_api_check_file_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求或 DOCX 内容不合法"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求的资源不存在"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "上传内容超过限制"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "服务内部处理失败"
+          }
+        },
+        "summary": "上传论文并执行格式检测"
+      }
+    },
+    "/api/check-jobs/create": {
+      "post": {
+        "operationId": "create_check_job_api_check_jobs_create_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_create_check_job_api_check_jobs_create_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckJobAcceptedResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求或 DOCX 内容不合法"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求的资源状态冲突"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "上传内容超过限制"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "待处理任务已达上限"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "服务内部处理失败"
+          }
+        },
+        "summary": "创建异步论文检测任务"
+      }
+    },
+    "/api/check-jobs/result": {
+      "post": {
+        "operationId": "get_check_job_result_api_check_jobs_result_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckJobLookupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckJobResultResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求的资源不存在"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求的资源状态冲突"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "服务内部处理失败"
+          }
+        },
+        "summary": "获取异步论文检测结果"
+      }
+    },
+    "/api/check-jobs/status": {
+      "post": {
+        "operationId": "get_check_job_status_api_check_jobs_status_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckJobLookupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckJobStatusResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求的资源不存在"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "查询异步论文检测进度"
+      }
+    },
+    "/api/colleges": {
+      "get": {
+        "description": "获取所有支持的学院列表（只读学院配置，不等待知识库就绪）",
+        "operationId": "get_colleges_api_colleges_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CollegeInfo"
+                  },
+                  "title": "Response Get Colleges Api Colleges Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "服务内部处理失败"
+          }
+        },
+        "summary": "获取所有可用学院列表（含学校/学院/专业/模板版本坐标）"
+      }
+    },
+    "/api/fix": {
+      "post": {
+        "description": "对用户确认的 issue 执行格式写回 + 文字改写，返回修复后的完整 docx。\n- **file**: 原始论文 docx（写回的载体，保存时保留其余全部内容）\n- **college_id**: 学院 ID，用于语义改写时的知识库检索\n- **issues_json**: 前端从 /api/check 结果中筛选、用户确认修复的 issue 列表 JSON。\n  题注文字（caption_text）、页边距等区块级属性直接放在 issue 内。\n- **images**: 对 rule_id 为 image.replace / image.insert 的修复项，\n  按其在 issues 中的出现顺序上传对应的新图片文件；后端注入 issue[\"image_bytes\"]。\n- **conversation_id**: 会话 ID（可选），传入时把本次真正修复的项从会话的\n  检测结果里移除，使对话上下文与屏幕上的列表保持一致。\n\n响应头携带修复统计：X-Applied-Count / X-Skipped-Count / X-Llm-Calls，\n另有 X-Fixed-Indexes（本次真正修复项在 issues 中的下标，逗号分隔），\n供前端把已修复项从结果列表中移除。\n\n写回层自身的失败（例如段落含域/图形无法安全改写、多节文档做结构性变更、\n区块契约外的字段）不会中断整次写回：这些条目被跳过并汇总，响应头给出\nX-Writeback-Skip-Count（跳过条数）与 X-Writeback-Warnings（JSON 数组，\n非 ASCII 字符按 \\uXXXX 转义，便于直接 JSON.parse），同时逐条写入服务端日志。\n注意这些跳过项是\"写回层面\"的，不会出现在 X-Fixed-Indexes 里：\nX-Fixed-Indexes 只统计 fix_document 真正改动的 issue。",
+        "operationId": "fix_paper_api_fix_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_fix_paper_api_fix_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "修复后的完整 DOCX 文件",
+            "headers": {
+              "X-Applied-Count": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Fixed-Indexes": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Llm-Calls": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Skipped-Count": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Writeback-Skip-Count": {
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Writeback-Warnings": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求或 DOCX 内容不合法"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "上传内容超过限制"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "服务内部处理失败"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "AI 或知识库服务尚不可用"
+          }
+        },
+        "summary": "写回修复（格式 + 文字），返回完整论文文件"
+      }
+    },
+    "/api/health": {
+      "get": {
+        "description": "健康检查。llm_status / rag_status 为 initializing 时表示后端可用、AI 能力仍在后台加载。",
+        "operationId": "health_check_api_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "健康检查"
+      }
+    },
+    "/api/kb/build": {
+      "post": {
+        "description": "构建知识库",
+        "operationId": "build_kb_api_kb_build_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildKBRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildKBResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求或 DOCX 内容不合法"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "服务内部处理失败"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "AI 或知识库服务尚不可用"
+          }
+        },
+        "summary": "构建知识库"
+      }
+    },
+    "/api/rag/answer": {
+      "post": {
+        "description": "基于知识库回答论文格式规范问题\n- **college_id**: 学院ID，如 jlu_cs、jlu_se\n- **question**: 用户问题\n- **conversation_id**: 可选会话ID，传入后启用多轮对话记忆",
+        "operationId": "rag_answer_api_rag_answer_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RAGRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RAGResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求或 DOCX 内容不合法"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求的资源不存在"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "服务内部处理失败"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "AI 或知识库服务尚不可用"
+          }
+        },
+        "summary": "RAG 问答"
+      }
+    },
+    "/api/rag/feedback": {
+      "post": {
+        "description": "记录一条回答反馈。\n\n只保存 response_id、评分和来源元数据，不接收也不保存问题/回答正文。",
+        "operationId": "rag_feedback_api_rag_feedback_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatFeedbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatFeedbackResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求或 DOCX 内容不合法"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "AI 或知识库服务尚不可用"
+          }
+        },
+        "summary": "回答反馈（有用 / 没用 / 答非所问）"
+      }
+    },
+    "/api/rebuild": {
+      "post": {
+        "description": "把上传的 docx 解析成契约 JSON，再经 json_to_docx 重建链生成新 docx。\n用于“生成新文档”模式：校验、归一化，或在契约块上做增删后重建。",
+        "operationId": "rebuild_paper_api_rebuild_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_rebuild_paper_api_rebuild_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "按解析契约重建的完整 DOCX 文件"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "请求或 DOCX 内容不合法"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "上传内容超过限制"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "服务内部处理失败"
+          }
+        },
+        "summary": "按解析契约重建 docx（图片/表格/公式可生成新版）"
+      }
+    },
+    "/api/session/reset": {
+      "post": {
+        "description": "开启“新对话”：清空该会话的对话历史，但保留绑定的论文检测结果。\n- **conversation_id**: 会话ID",
+        "operationId": "reset_session_api_session_reset_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionResetRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResetResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "AI 或知识库服务尚不可用"
+          }
+        },
+        "summary": "清空会话对话历史（保留论文检测结果）"
+      }
+    }
+  }
+}

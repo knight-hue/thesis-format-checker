@@ -1,0 +1,4 @@
+# 测试与本地接口自测依赖（项目 .venv 或系统 Python 均可安装）
+# 运行时依赖见 requirements.txt，这里只补测试链路需要的包。
+pytest>=9.1.1
+httpx>=0.28.1

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thesis-format-checker.local/schemas/rag-answer-v2.json",
+  "title": "RAG answer schema v2",
+  "description": "RAG 回答的机器可读数据契约；旧三字段仍 required，新字段可选。",
+  "type": "object",
+  "required": [
+    "conclusion",
+    "basis",
+    "suggestion"
+  ],
+  "properties": {
+    "conclusion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "basis": {
+      "type": "string",
+      "minLength": 1
+    },
+    "suggestion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "can_judge": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "observed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "unknown": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "answer_schema_version": {
+      "type": "string",
+      "enum": [
+        "1.0",
+        "2.0"
+      ],
+      "default": "1.0"
+    }
+  },
+  "additionalProperties": true
+}

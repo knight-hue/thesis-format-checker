@@ -1,0 +1,371 @@
+{
+  "schema_version": "terminology-policy-runtime-2026-11-15",
+  "source": {
+    "policy": "review/terminology_policy_overrides.json",
+    "gazetteer": "review/terminology_exemptions_2027.json",
+    "gate_sets": [
+      "tools/judge_hybrid.py",
+      "tools/build_samples.py",
+      "tools/resolve_unknown_by_occurrence.py"
+    ],
+    "generated_at": "2026-11-15",
+    "note": "运行时策略数据；不含论文正文或 300 条标注。"
+  },
+  "scope_rules": {
+    "en_abstract": "独立检查范围：本范围内的首次出现单独判定；不能替代中文摘要或中文正文的首次定义。",
+    "zh_abstract": "独立检查范围：摘要中的释义不自动免除正文首次解释。",
+    "body": "独立检查范围：含正文、列表项、注释；只看本范围内的更早出现。",
+    "acknowledgement": "独立检查范围。"
+  },
+  "level_overrides": [
+    {
+      "term": "AI",
+      "from_level": "C",
+      "to_level": "B",
+      "mode": "conditional",
+      "default_verdict": "not_applicable",
+      "note": "计算机、软件工程、人工智能等专业按领域通用缩写免解释；不属于所有规范下无条件豁免。",
+      "strict_mode": {
+        "enabled_field": "strict_mode",
+        "verdict": "requires_explanation",
+        "note": "严格模式下 AI 仍需首次解释（缺释义判 violation）。"
+      }
+    }
+  ],
+  "proper_name_rulings": [
+    {
+      "term": "AMS",
+      "verdict": "not_applicable",
+      "reason": "作者以 Amazon SageMaker（AMS）约定简称，属产品专名；不等于官方缩写。"
+    },
+    {
+      "term": "MIT",
+      "verdict": "not_applicable",
+      "reason": "机构专名且已给出中文全称（麻省理工学院），按机构简称处理。"
+    },
+    {
+      "term": "WXML",
+      "verdict": "not_applicable",
+      "reason": "微信小程序的 WXML 标记语言（WeiXin Markup Language），平台语言的正式名称，与 JavaScript、HTML 并列出现（2026-11-17 策展：豁免仅针对 WXML 本身）。"
+    },
+    {
+      "term": "SCSS",
+      "verdict": "not_applicable",
+      "reason": "Sass 使用的样式表语法名（Sassy CSS），作为前端技术栈名称列举，属已命名的语言形式（2026-11-17 策展）。"
+    },
+    {
+      "term": "WXSS",
+      "verdict": "not_applicable",
+      "reason": "微信小程序的 WXSS 样式语言（WeiXin Style Sheets），平台特定正式技术名称（2026-11-17 策展：不据此豁免其他 SS/CSS 概念）。"
+    },
+    {
+      "term": "MOGWO",
+      "verdict": "not_applicable",
+      "reason": "多目标灰狼优化算法（Multi-objective Grey Wolf Optimizer）的命名算法，适用算法专名豁免；原文已给出中文名与英文全称，括号未闭合属抽取问题（2026-11-17 策展）。"
+    },
+    {
+      "term": "JDBC",
+      "verdict": "not_applicable",
+      "reason": "Java Database Connectivity 的既定平台 API 名称（2026-11-17 策展）。"
+    },
+    {
+      "term": "SDL",
+      "verdict": "not_applicable",
+      "reason": "Simple DirectMedia Layer 多媒体开发库的正式名称，Pygame 所依托的软件库名（2026-11-17 策展）。"
+    },
+    {
+      "term": "SARSA",
+      "verdict": "not_applicable",
+      "reason": "State-Action-Reward-State-Action 强化学习具名算法，与 Q-learning 并列出现（2026-11-17 策展）。"
+    },
+    {
+      "term": "XPBD",
+      "verdict": "not_applicable",
+      "reason": "Extended Position-Based Dynamics 具名物理模拟方法，原文注明由 Macklin 等人提出（2026-11-17 策展）。"
+    },
+    {
+      "term": "JSX",
+      "verdict": "not_applicable",
+      "reason": "React 生态中描述 UI 结构的具名 JavaScript 语法扩展（2026-11-17 策展）。"
+    },
+    {
+      "term": "OWL",
+      "verdict": "not_applicable",
+      "reason": "Web Ontology Language（Web 本体语言）正式标准语言名称，与 RDF、RDFS 并列（2026-11-17 策展）。"
+    }
+  ],
+  "algorithm_proper_names": [
+    {
+      "term": "K-means",
+      "verdict": "not_applicable",
+      "reason": "算法专名而非英文缩略语，不按“缩写首次出现”要求展开（2026-11-15 人审）。"
+    },
+    {
+      "term": "AdaBoost",
+      "verdict": "not_applicable",
+      "reason": "驼峰式算法专名，非全大写缩略语，不按“缩写首次出现”要求展开（2026-11-15 人审）。"
+    }
+  ],
+  "model_proper_names": [
+    {
+      "term": "PSPNet",
+      "verdict": "not_applicable",
+      "reason": "金字塔场景解析网络模型专名，按模型专名处理（2026-11-15 人审）。"
+    }
+  ],
+  "official_format_names": [
+    {
+      "term": "OOXML",
+      "verdict": "not_applicable",
+      "suggested_level": "A",
+      "reason": "Office Open XML 官方文件格式名称，按官方格式名处理；建议补入 A 级源表（2026-11-15 人审）。"
+    }
+  ],
+  "gloss_rules": {
+    "parenthetical_must_expand": "缩写后面的括号内容必须真正展开该缩写；若括号内容只是包含该缩写的短语（Virtual DOM、virtualDOM模块），不算首次释义。",
+    "chinese_name_in_parens": "“中文名（TOKEN）”仍是有效释义形式，不受上一条影响。",
+    "chinese_name_before_token": "“中文名（TOKEN）”或“中文名(TOKEN 附加词)”算释义；如“均方误差(MSE Loss)”。",
+    "short_form": "“（English Full Name，简称 TOKEN）”算释义；如“Stochastic Gradient Descent，简称SGD”。",
+    "direct_definition": "“TOKEN 是/指/表示/即 <词表中文名>”算释义；仅说“TOKEN 是 101 层的 ResNet”不算。"
+  },
+  "b04_domain_exemption": {
+    "enabled": false,
+    "note": "默认关闭：ECG 等 B04 词条仍按“需首次解释”判 violation。开启后还要看论文实际研究领域，不能只看学院名称；且只覆盖词表注明“仅医学/生命科学专业”的词条。",
+    "field_detection": "取标题 + 中英文关键词 + 中文摘要，命中 ≥3 个医学/生命科学词判定为 medicine",
+    "field_terms_example": [
+      "心电",
+      "脑电",
+      "临床",
+      "病理",
+      "患者",
+      "医学",
+      "诊断",
+      "生物",
+      "基因"
+    ],
+    "excluded_terms_note": "CT（亦可指循环阈值）、BP（与反向传播同形）、HR（也指人力资源）、HE/RT-PCR/E. coli 等带歧义说明的词条不参与领域豁免"
+  },
+  "gate": {
+    "ubiquitous": [
+      "AI",
+      "API",
+      "APP",
+      "CD",
+      "CPU",
+      "CSS",
+      "CSV",
+      "DNS",
+      "DVD",
+      "EXCEL",
+      "GB",
+      "GPU",
+      "GUI",
+      "HTML",
+      "HTTP",
+      "ID",
+      "IP",
+      "IT",
+      "JS",
+      "JSON",
+      "KB",
+      "LAN",
+      "MATCH",
+      "MB",
+      "OK",
+      "OS",
+      "PC",
+      "PB",
+      "PDF",
+      "PPT",
+      "RAM",
+      "RETURN",
+      "ROM",
+      "SELECT",
+      "SQL",
+      "TB",
+      "TV",
+      "URL",
+      "USB",
+      "WAN",
+      "WORD",
+      "XML"
+    ],
+    "proper_names": [
+      "ACM",
+      "AMS",
+      "ANSISQL",
+      "BERT",
+      "BUG",
+      "CALIS",
+      "COCO",
+      "CUTE",
+      "CVPR",
+      "DCGAN",
+      "DEFUSE",
+      "FICO",
+      "FPS",
+      "GDC",
+      "GOTO",
+      "GPT",
+      "HDSC",
+      "HIPAA",
+      "IBM",
+      "ICD",
+      "ICPR",
+      "IDC",
+      "IEEE",
+      "IK",
+      "JAR",
+      "JENA",
+      "KMV",
+      "LIN",
+      "MACE",
+      "MILD",
+      "MIT",
+      "MOBA",
+      "NLTK",
+      "NOVA",
+      "ONNX",
+      "PAGE",
+      "PAI",
+      "PR",
+      "QRS",
+      "RESNET",
+      "RTX",
+      "RUSSELL",
+      "RVEA",
+      "SCATS",
+      "SCOOT",
+      "ST",
+      "SUCCESS",
+      "UCI",
+      "UCL",
+      "UI",
+      "UMLS",
+      "VGG",
+      "VITS",
+      "VPT",
+      "YAGO"
+    ],
+    "conditional_b_level": [
+      "AI"
+    ],
+    "b_generic_allowlist": [
+      "API",
+      "APP",
+      "CLI",
+      "CPU",
+      "GPU",
+      "HTTP",
+      "IO",
+      "RAM",
+      "SDK",
+      "UI"
+    ],
+    "proper_name_allowlist": [
+      "AMS",
+      "MIT"
+    ],
+    "manual_non_exempt": [
+      "AIGC",
+      "BPNN",
+      "CART",
+      "CF",
+      "CT",
+      "DAG",
+      "DCNN",
+      "DOM",
+      "DRY",
+      "FAQ",
+      "GDBT",
+      "LAMP",
+      "LTI",
+      "MOOP",
+      "NPC",
+      "OOXML",
+      "PLM",
+      "PV",
+      "PWA",
+      "SHAP",
+      "SMOTE",
+      "TEE",
+      "TTL",
+      "VR"
+    ],
+    "algorithm_proper_names": [
+      "AdaBoost",
+      "K-means"
+    ],
+    "model_proper_names": [
+      "MP",
+      "PSPNet"
+    ],
+    "non_term_examples": [
+      "GL",
+      "KATOMAA",
+      "UFO"
+    ],
+    "official_format_names": [
+      "OOXML"
+    ],
+    "b04_excluded_terms": [
+      "BP",
+      "CT",
+      "E. coli",
+      "HE",
+      "HR",
+      "RT-PCR"
+    ]
+  },
+  "medical_field_terms": [
+    "临床",
+    "住院",
+    "医学",
+    "医疗",
+    "基因",
+    "影像组学",
+    "心率",
+    "心电",
+    "患者",
+    "手术",
+    "生物",
+    "生理",
+    "疾病",
+    "病历",
+    "病灶",
+    "病理",
+    "癌",
+    "组织学",
+    "细胞",
+    "肌电",
+    "肿瘤",
+    "脑电",
+    "药物",
+    "蛋白",
+    "血压",
+    "血氧",
+    "诊断"
+  ],
+  "token_aliases": {
+    "IO": [
+      "IO",
+      "I/O"
+    ],
+    "MP": [
+      "MP"
+    ]
+  },
+  "gate_precedence": [
+    "level_overrides",
+    "conditional_b_level",
+    "b04_domain_exemption",
+    "proper_name_allowlist",
+    "proper_name_rulings",
+    "algorithm_proper_names",
+    "model_proper_names",
+    "official_format_names",
+    "proper_names",
+    "ubiquitous",
+    "gazetteer"
+  ]
+}

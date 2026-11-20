@@ -1,0 +1,132 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --sidebar-w: 232px;
+  /* 侧栏固定深蓝，不再跟随主题色换底 */
+  --sidebar-bg: #0e1a2b;
+  --sidebar-bg-soft: #132238;
+  --sidebar-text: #c7d2e0;
+  --sidebar-muted: #8296ac;
+  --sidebar-active-bg: #1b2e47;
+  --sidebar-active-text: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  /* 内容区中性色 */
+  --content-bg: #f5f7fa;
+  --surface: #ffffff;
+  --border: #e3e8ef;
+  --text: #172033;
+  --muted: #64748b;
+  /* 强调色默认值，运行时由 theme.applyTheme 覆盖 */
+  --accent: #4f8ef7;
+  --accent-bright: #7fb0ff;
+  --accent-2: #6f63ef;
+  --accent-3: #d9b96a;
+  --accent-soft: #eef4ff;
+  --accent-strong: #3d74d4;
+  --accent-contrast: #ffffff;
+  /* 兼容旧主题变量 */
+  --theme-color: #4f8ef7;
+  --theme-tint: #eef4ff;
+  --theme-shade: #3d74d4;
+  --theme-text: #ffffff;
+  --theme-text-soft: rgba(255, 255, 255, 0.72);
+  --theme-hover: rgba(255, 255, 255, 0.08);
+  --theme-border: #e3e8ef;
+}
+
+/* 平板：图标栏；手机：侧栏收进抽屉，--sidebar-w 归零供 FixBar 使用 */
+@media (max-width: 1199.98px) and (min-width: 768px) {
+  :root { --sidebar-w: 78px; }
+}
+@media (max-width: 767.98px) {
+  :root { --sidebar-w: 0px; }
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  font-family: system-ui, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--content-bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* ---------- 卡片 / 弹窗：浅色渐变 + 渐变描边，避免整块同一种深蓝 ---------- */
+.el-card {
+  --el-card-border-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #fbfdff 100%) padding-box,
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 26%, transparent), color-mix(in srgb, var(--accent-2) 12%, transparent) 52%, color-mix(in srgb, var(--accent) 6%, transparent)) border-box;
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06), 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.el-dialog {
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%) padding-box,
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 30%, transparent), color-mix(in srgb, var(--accent-2) 16%, transparent) 54%, color-mix(in srgb, var(--accent) 8%, transparent)) border-box;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.2);
+}
+.el-dialog__header {
+  margin-right: 0;
+  padding: 20px 24px 14px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 12%, transparent), color-mix(in srgb, var(--accent-2) 6%, transparent) 58%, transparent);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+.el-dialog__title {
+  color: var(--text);
+  font-weight: 600;
+}
+.el-dialog__body {
+  padding: 20px 24px;
+  color: var(--text);
+}
+.el-dialog__footer {
+  padding: 12px 24px 20px;
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+  background: rgba(248, 250, 252, 0.6);
+}
+
+.el-message-box {
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f8fbff 100%) padding-box,
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 28%, transparent), color-mix(in srgb, var(--accent-2) 14%, transparent)) border-box;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.2);
+}
+.el-message-box__header {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, transparent), color-mix(in srgb, var(--accent-2) 5%, transparent), transparent);
+}
+
+.el-drawer {
+  background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+}
+.el-drawer__header {
+  margin-bottom: 0;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, transparent), color-mix(in srgb, var(--accent-2) 5%, transparent), transparent);
+  color: var(--text);
+}
+.el-drawer__title {
+  color: var(--text);
+  font-weight: 600;
+}
+.el-drawer__body {
+  padding: 16px 20px;
+}

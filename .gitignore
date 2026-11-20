@@ -1,0 +1,69 @@
+# ---------------- Python ----------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+sdist/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 测试与覆盖率
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+.pytest_cache/
+.hypothesis/
+.mypy_cache/
+.dmypy.json
+
+# 虚拟环境
+.venv
+venv/
+env/
+ENV/
+
+# ---------------- 本地配置与密钥 ----------------
+.env
+local_settings.py
+
+# ---------------- 项目本地资产（不随仓库分发）----------------
+# 运行产物：会话库、异步任务库、知识库、导出
+/var/
+
+# 本地模型权重（使用者自行放置）
+/models/
+
+# 本地论文语料（含姓名学号等个人信息）
+/samples/
+/eval/samples/
+
+# 评测运行产物
+eval/out/
+
+# ---------------- 前端 ----------------
+node_modules/
+frontend/dist/
+
+# ---------------- 编辑器与工具 ----------------
+.idea/
+.vscode/
+*.iml
+*.code-workspace
+.apifox/
+*.log

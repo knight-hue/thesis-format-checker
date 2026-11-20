@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "college_id": "jlu_se",
+  "_note": "本院的结构识别表：管“这一段是什么”（摘要标题/参考文献条目/图题…），与同目录 jlu_se_rules.json 的“要求是什么”分开。只写要改的键，未写的用 recognition/structure.py 的默认值；异校模板写法不同（如承诺书叫“学术诚信声明”、图题写“Fig.”）时改这里，不动代码。",
+  "section_anchors": {
+    "中文题目": "title",
+    "论文题目": "title",
+    "英文题目": "en_title",
+    "目录": "toc",
+    "contents": "toc",
+    "tableofcontents": "toc",
+    "摘要": "abstract_title",
+    "中文摘要": "abstract_title",
+    "abstract": "en_abstract_title",
+    "关键词": "keyword_title",
+    "关键字": "keyword_title",
+    "keyword": "en_keyword_title",
+    "keywords": "en_keyword_title",
+    "参考文献": "reference_title",
+    "references": "reference_title",
+    "致谢": "acknowledgement_title",
+    "acknowledgement": "acknowledgement_title",
+    "acknowledgements": "acknowledgement_title"
+  },
+  "heading": {
+    "style_names": [
+      "标题",
+      "heading"
+    ],
+    "chapter_prefix": "第",
+    "chapter_units": "章节部分篇"
+  },
+  "front_matter": {
+    "pledge_title_suffixes": [
+      "承诺书"
+    ],
+    "pledge_body_keywords": [
+      "承诺",
+      "签名"
+    ],
+    "cover_fields": [
+      "author",
+      "supervisor",
+      "指导教师",
+      "导师",
+      "作者"
+    ]
+  },
+  "captions": {
+    "figure_prefixes": [
+      "图"
+    ],
+    "table_prefixes": [
+      "表",
+      "表格",
+      "图表"
+    ],
+    "continued_prefixes": [
+      "续表"
+    ],
+    "number_separators": "-－"
+  },
+  "references": {
+    "entry_number_open": "[［",
+    "entry_number_close": "]］"
+  }
+}

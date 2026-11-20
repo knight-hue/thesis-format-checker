@@ -1,0 +1,28 @@
+{
+  "jlu_cs": {
+    "school": "jlu",
+    "school_name": "吉林大学",
+    "college": "cs",
+    "college_name": "计算机科学与技术学院",
+    "major": null,
+    "major_name": null,
+    "template_version": "Z-3",
+    "effective_year": null,
+    "rule_file": "config/rules/jlu/cs/jlu_cs.txt",
+    "chunk_size": 300,
+    "chunk_overlap": 50
+  },
+  "jlu_se": {
+    "school": "jlu",
+    "school_name": "吉林大学",
+    "college": "se",
+    "college_name": "软件学院",
+    "major": null,
+    "major_name": null,
+    "template_version": "Z-3",
+    "effective_year": null,
+    "rule_file": "config/rules/jlu/se/jlu_se.txt",
+    "chunk_size": 300,
+    "chunk_overlap": 50
+  }
+}

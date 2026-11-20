@@ -1,0 +1,199 @@
+{
+  "schema_version": "1.0",
+  "college_id": "jlu_se",
+  "page": {
+    "margins": {
+      "left_cm": 3.0,
+      "right_cm": 3.0,
+      "top_cm": 2.0,
+      "bottom_cm": 2.0,
+      "header_cm": 1.5,
+      "footer_cm": 1.5
+    },
+    "tolerance_cm": 0.1
+  },
+  "body": {
+    "east_asia_font": "宋体",
+    "latin_font": "Times New Roman",
+    "font_size_pt": 12,
+    "line_spacing_multiple": 1.5,
+    "char_spacing_pt": 0,
+    "check_fullwidth_punctuation": true,
+    "font_size_tolerance_pt": 0.5,
+    "spacing_tolerance": 0.05
+  },
+  "list_item": {
+    "required_total_marker": "．",
+    "total_marker_pattern": "^\\d{1,2}\\s*([．.、，,])(?!\\d)",
+    "sub_pattern": "^(?:[（(]\\d{1,2}[）)]|\\d{1,2}[）)])",
+    "forbid_punct_after_marker": "、，。；：,.?;:!"
+  },
+  "title": {
+    "font_name": "宋体",
+    "font_size_pt": 15,
+    "alignment": "center"
+  },
+  "author_info": {
+    "alignment": "right"
+  },
+  "headings": {
+    "heading_1": {
+      "font_name": "宋体",
+      "font_size_pt": 16,
+      "alignment": "center",
+      "pattern": "^第\\d+章"
+    },
+    "heading_2": {
+      "font_name": "宋体",
+      "font_size_pt": 14,
+      "alignment": "left",
+      "pattern": "^\\d+\\.\\d+"
+    },
+    "heading_3": {
+      "font_name": "宋体",
+      "font_size_pt": 12,
+      "alignment": "left",
+      "pattern": "^\\d+\\.\\d+\\.\\d+"
+    }
+  },
+  "abstract": {
+    "title_text": "摘要",
+    "title": {
+      "font_name": "宋体",
+      "font_size_pt": 14,
+      "alignment": "center",
+      "bold": true
+    },
+    "body": {
+      "font_name": "宋体",
+      "font_size_pt": 12,
+      "line_spacing_multiple": 1.5
+    }
+  },
+  "english_abstract": {
+    "title_text": "Abstract",
+    "title": {
+      "font_name": "Times New Roman",
+      "font_size_pt": 15,
+      "alignment": "center"
+    },
+    "abstract_title": {
+      "font_name": "Times New Roman",
+      "font_size_pt": 14,
+      "alignment": "center",
+      "bold": true
+    },
+    "body": {
+      "font_name": "Times New Roman",
+      "font_size_pt": 12,
+      "line_spacing_multiple": 1.5
+    },
+    "keyword_title": {
+      "font_name": "Times New Roman",
+      "font_size_pt": 14,
+      "bold": true,
+      "blank_line_before": true,
+      "own_line": true
+    },
+    "keyword_body": {
+      "font_name": "Times New Roman",
+      "font_size_pt": 12,
+      "line_spacing_multiple": 1.5
+    },
+    "keyword_min_count": 3,
+    "keyword_max_count": 5,
+    "keyword_separator": ",",
+    "keyword_separator_ascii_only": true,
+    "keyword_forbid_terminal_punctuation": true,
+    "keyword_label": "Keywords",
+    "keyword_colon": ":"
+  },
+  "keywords": {
+    "title": {
+      "font_name": "宋体",
+      "font_size_pt": 14,
+      "bold": true,
+      "blank_line_before": true,
+      "own_line": true
+    },
+    "body": {
+      "font_name": "宋体",
+      "font_size_pt": 12,
+      "line_spacing_multiple": 1.5
+    },
+    "min_count": 3,
+    "max_count": 5,
+    "separator": "，",
+    "forbid_terminal_punctuation": true,
+    "label": "关键词",
+    "label_colon": "："
+  },
+  "tables": {
+    "caption": {
+      "font_name": "黑体",
+      "font_size_pt": 10.5,
+      "alignment": "center",
+      "position": "above",
+      "pattern": "^\\d+-\\d+$"
+    },
+    "cell_east_asia_font": "宋体",
+    "cell_font_size_pt": 10.5,
+    "check_placement": true,
+    "check_continuity": true,
+    "continued_note": {
+      "prefix": [
+        "续表"
+      ],
+      "position": "table_left",
+      "position_tolerance_pt": 6.0,
+      "check_caption_marker": true
+    }
+  },
+  "figures": {
+    "caption": {
+      "font_name": "黑体",
+      "font_size_pt": 10.5,
+      "alignment": "center",
+      "position": "below",
+      "pattern": "^\\d+-\\d+$"
+    },
+    "check_placement": true,
+    "check_continuity": true,
+    "inner_content": {
+      "enabled": true,
+      "east_asia_font": "宋体",
+      "font_size_pt": 10.5,
+      "font_size_tolerance_pt": 0.5
+    }
+  },
+  "notes": {
+    "font_name": "黑体",
+    "font_size_pt": 12,
+    "space_before_pt": 12,
+    "alignment": "follow_heading",
+    "prefix": [
+      "【注】",
+      "【注意】"
+    ],
+    "single_item_inline": true,
+    "line_spacing_multiple": 1.5,
+    "content_font_size_pt": 14
+  },
+  "formula": {
+    "alignment": "center",
+    "number_pattern": "^[（(]\\d+-\\d+[）)]$",
+    "number_position": "end",
+    "check_continuity": true,
+    "forbid_dotted_line": true
+  },
+  "references": {
+    "title_text": "参考文献",
+    "entry": {
+      "font_name": "宋体",
+      "font_size_pt": 10.5
+    }
+  },
+  "acknowledgement": {
+    "title_text": "致    谢"
+  }
+}

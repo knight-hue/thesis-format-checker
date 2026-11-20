@@ -1,0 +1,18 @@
+# 论文格式检查系统直接依赖（版本下限与项目 .venv 已装版本对齐）
+fastapi>=0.141.1
+uvicorn>=0.52.1
+pydantic>=2.13.4
+python-multipart>=0.0.20
+python-docx>=1.2.0
+openai>=2.53.0
+langchain>=1.3.14
+langchain-core>=1.5.3
+langchain-chroma>=1.1.0
+langchain-text-splitters>=1.1.2
+langchain-community>=0.4.2
+chromadb>=1.5.9
+# 嵌入推理走 onnxruntime + tokenizers，不再需要 torch / sentence-transformers / langchain-huggingface
+onnxruntime>=1.28.0
+tokenizers>=0.22.2
+rank-bm25>=0.2.2
+jieba>=0.42.1

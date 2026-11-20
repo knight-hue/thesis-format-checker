@@ -1,0 +1,9 @@
+# 运行期临时产物（var/ 本身已在 .gitignore 中忽略）
+var/
+# 评测输出（自动生成）
+eval/out/
+# 真实论文样张（只读，含个人信息）
+samples/
+# 前端改造前文档备份
+docs/backups/
+node_modules/
