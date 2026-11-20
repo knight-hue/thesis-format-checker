@@ -97,14 +97,17 @@ models/bge-small-zh-v1.5-onnx/
 
 ### 试一下
 
-仓库自带一份**合成样例**（不含任何真实论文内容）：
+仓库自带 **`examples/sample.docx`**（100% 合成，不含任何真实论文内容）：
+
+把它上传，会检出 24 条格式问题，覆盖页面设置、标题、正文、图表题注与参考文献。
+
+想重新生成或改造样例：
 
 ```powershell
-python examples\make_sample.py      # 生成 examples/sample.docx
+python examples\make_sample.py
 ```
 
-把 `sample.docx` 上传，会检出约 20 条格式问题，覆盖页面设置、标题、正文、图表题注与参考文献。
-样例里每一条错误都是脚本故意留的，见 `examples/make_sample.py` 顶部注释。
+每一条错误都是脚本故意留的，见 `examples/make_sample.py` 顶部注释。
 
 ## 没有 API Key / 没有模型时会怎样
 
