@@ -51,7 +51,7 @@ local_settings.py
 
 # 本地论文语料（含姓名学号等个人信息）
 /samples/
-/eval/samples/
+/eval/samples/*.docx
 
 # 评测运行产物
 eval/out/
