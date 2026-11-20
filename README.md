@@ -76,6 +76,17 @@ $env:LLM_API_KEY = "<your-key>"
 
 不配置时系统进入**降级模式**（见下节）。
 
+### 配置嵌入模型（RAG 需要）
+
+规范问答依赖本地 ONNX 嵌入模型（`BAAI/bge-small-zh-v1.5`，见 `backend/config.py` 的 `EMBEDDING_MODEL`）。
+该资产**不随仓库分发**，需自行下载后放到 `models/` 下：
+
+```text
+models/bge-small-zh-v1.5-onnx/
+```
+
+缺失时规范问答与知识库构建不可用，**格式检测不受影响**。
+
 ### 运行
 
 ```powershell
